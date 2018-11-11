@@ -82,18 +82,6 @@ function populate_matrix(matrix) {
 	//console.table(matrix);
 }//end populate_matrix
 
-
-function run_game() {
-	//boolean to start/stop the game
-	let game_stopped = true;
-	//draw the first matrix
-
-	while (!game_stopped) {
-		//calculate the next state
-
-		//draw the next state
-	}
-}
 var matrix = create_matrix(100, 100);
 populate_matrix(matrix);
 console.table(matrix);
@@ -103,47 +91,75 @@ var table = $("#ourTable")[0];
 var cell = table.rows[0].cells[0];
 
 function color() {
-    for (var i = 0; i < 100; i++) {
-        for (var j = 0; j < 100; j++) {
-            if (matrix[i][j] == 1) {
-                cell = table.rows[i].cells[j];
-                $(cell).css('background-color', 'black');
-            }
-            else {
-                cell = table.rows[i].cells[j];
-                $(cell).css('background-color', 'white');
-            }
-        }
-    }
+	for (var i = 0; i < 100; i++) {
+		for (var j = 0; j < 100; j++) {
+			if (matrix[i][j] == 1) {
+				cell = table.rows[i].cells[j];
+				$(cell).css('background-color', 'black');
+			}
+			else {
+				cell = table.rows[i].cells[j];
+				$(cell).css('background-color', 'white');
+			}
+		}
+	}
 }
 color();
-
 var intervalID = null;
 var counter = 0;
-
 var twentyThree = function(){
-	if(counter<23){
+	if (counter < 23) {
 		counter++;
 		tick();
 	}
-	else{
+	else {
 		clearInterval(intervalID);
 	}
 }
-function tick(interval) {
+function twentythreebutton() {
+	counter = 0;
+	var intervalID = setInterval(twentyThree, 250);
 
+}
+
+
+function tick(interval) {
 	matrix = next_state(matrix);
 	color();
 	console.log(counter);
+
 }
 
-function twentythreebutton(){
-	counter = 0;
-	var intervalID = setInterval(twentyThree, 250);
-} 
+var intervalIDStartGame = null;
+var gameStopped = true;
+
+var startGame = function(){
+	if (!gameStopped){
+		tick();
+	}
+	else{
+		clearInterval(intervalIDStartGame);
+	}
+}
+function startButton() {
+	gameStopped = false;
+	var intervalIDStartGame = setInterval(startGame, 250);
+}
+
+function stopButton() {
+	gameStopped = true;
+}
+
+// var  = function () {
+// 	gameStopped = false;
+// 	while (gameStopped) {
+// 		tick();
+// 	}
+// }
+
 function zeroMatrix() {
-	matrix = create_matrix(matrix.length,matrix[0].length);
-	for(let i = 0; i < matrix.length; i++ ) {
+	matrix = create_matrix(matrix.length, matrix[0].length);
+	for (let i = 0; i < matrix.length; i++) {
 		for (let j = 0; j < matrix[0].length; j++) {
 			matrix[i][j] = 0;
 		}
@@ -151,5 +167,5 @@ function zeroMatrix() {
 	tick();
 }
 function stopMatrix() {
-	
+
 }
