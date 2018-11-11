@@ -6,17 +6,18 @@ function draw_matrix(){
 
 //function that will determine the next state of the board
 function next_state(matrix){
-	//ignore the outer two rows and columns
 	//copy of the old array
 	new_matrix = matrix.slice();
-	
+
+	//ignore the outer two rows and columns
 	for(let i = 2; i<matrix.length-2;i++){
 		//for each column
 		for(let j =2; j< matrix[0].length-2;j++){
-			matrix[i][j] = 3;
+			new_matrix[i][j] = sum_neighbors(i,j,matrix);
 		}
 	}
 
+	return new_matrix;
 	//f(sum_neighbors(i,j,matrix)>2)
 }
 
@@ -69,7 +70,7 @@ function populate_matrix(matrix){
 		matrix[0][j] = 0;
 		matrix[1][j] = 0;
 	}
-	console.table(matrix);
+	//console.table(matrix);
 }//end populate_matrix
 
 
@@ -89,7 +90,11 @@ function run_game(){
 
 
 
-var newmatrix = create_matrix(10,10);
+matrix = create_matrix(10,10);
 
-populate_matrix(newmatrix);
+populate_matrix(matrix);
+console.table(matrix);
+
+newmatrix = next_state(matrix);
+console.table(new_matrix);
 
