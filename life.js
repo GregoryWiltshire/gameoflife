@@ -9,8 +9,15 @@ function next_state(matrix){
 	//ignore the outer two rows and columns
 	//copy of the old array
 	new_matrix = matrix.slice();
+	
+	for(let i = 2; i<matrix.length-2;i++){
+		//for each column
+		for(let j =2; j< matrix[0].length-2;j++){
+			matrix[i][j] = 3;
+		}
+	}
 
-	if(sum_neighbors(i,j,matrix)>2)
+	//f(sum_neighbors(i,j,matrix)>2)
 }
 
 function sum_neighbors(x,y,matrix){
@@ -62,10 +69,8 @@ function populate_matrix(matrix){
 		matrix[0][j] = 0;
 		matrix[1][j] = 0;
 	}
-	//console.table(matrix);
+	console.table(matrix);
 }//end populate_matrix
-
-
 
 
 function run_game(){
