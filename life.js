@@ -130,9 +130,6 @@ var twentyThree = function(){
 		clearInterval(intervalID);
 	}
 }
-
-
-
 function tick(interval) {
 
 	matrix = next_state(matrix);
@@ -144,13 +141,15 @@ function twentythreebutton(){
 	counter = 0;
 	var intervalID = setInterval(twentyThree, 250);
 } 
-
-// function twentyThreeGenerations() {
-// 	counter = 0;
-// 	var intervalID = setInterval(tick, 500);
+function zeroMatrix() {
+	matrix = create_matrix(matrix.length,matrix[0].length);
+	for(let i = 0; i < matrix.length; i++ ) {
+		for (let j = 0; j < matrix[0].length; j++) {
+			matrix[i][j] = 0;
+		}
+	}
+	tick();
+}
+function stopMatrix() {
 	
-// 	if (counter == 5) {
-// 		window.clearInterval(intervalID);
-// 		counter = 0;
-// 	}
-// }
+}
