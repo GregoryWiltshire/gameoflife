@@ -1,4 +1,5 @@
 //TODO
+// booty is great
 function draw_matrix() {
 }
 //function that will determine the next state of the board
