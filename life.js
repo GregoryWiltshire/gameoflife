@@ -6,14 +6,28 @@ function draw_matrix(){
 
 //function that will determine the next state of the board
 function next_state(matrix){
-	//copy of the old array
+	
 	new_matrix = create_matrix(matrix.length,matrix[1].length);
-
 	//ignore the outer two rows and columns
 	for(let i = 2; i<matrix.length-2;i++){
 		//for each column
 		for(let j =2; j< matrix[0].length-2;j++){
-			new_matrix[i][j] = sum_neighbors(i,j,matrix);
+			let bitvalue = matrix[i][j];
+			let neighbors = sum_neighbors(i,j,matrix);
+			//if alive
+			if(bitvalue==1){
+				//if more than 3, or less than 2 neighbors he dead
+				if(neighbors < 2 || neighbors > 3){
+					bitvalue = 0;
+				}
+			}
+			//if dead
+			else{
+				if(neighbors==3){
+					bitvalue = 1;
+				}
+			}
+			new_matrix[i][j] = bitvalue;
 			console.log(new_matrix[i][j])
 		}
 	}
