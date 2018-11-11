@@ -28,7 +28,6 @@ function next_state(matrix){
 				}
 			}
 			new_matrix[i][j] = bitvalue;
-			console.log(new_matrix[i][j])
 		}
 	}
 
