@@ -7,13 +7,14 @@ function draw_matrix(){
 //function that will determine the next state of the board
 function next_state(matrix){
 	//copy of the old array
-	new_matrix = matrix.slice();
+	new_matrix = create_matrix(matrix.length,matrix[1].length);
 
 	//ignore the outer two rows and columns
 	for(let i = 2; i<matrix.length-2;i++){
 		//for each column
 		for(let j =2; j< matrix[0].length-2;j++){
 			new_matrix[i][j] = sum_neighbors(i,j,matrix);
+			console.log(new_matrix[i][j])
 		}
 	}
 
