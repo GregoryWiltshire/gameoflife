@@ -107,7 +107,7 @@ function color() {
 color();
 var intervalID = null;
 var counter = 0;
-var twentyThree = function () {
+var twentyThree = function(){
 	if (counter < 23) {
 		counter++;
 		tick();
@@ -133,11 +133,11 @@ function tick(interval) {
 var intervalIDStartGame = null;
 var gameStopped = true;
 
-var startGame = function () {
-	if (!gameStopped) {
+var startGame = function(){
+	if (!gameStopped){
 		tick();
 	}
-	else {
+	else{
 		clearInterval(intervalIDStartGame);
 	}
 }
@@ -166,27 +166,22 @@ function zeroMatrix() {
 	}
 	tick();
 }
-function pleaseWork() {
-	var cell = matrix[50][50];
-	$(cell).css('background-color', 'black');
-}
-function drawBlock() {
-	var cell = [
-		[0, 0, 0, 0],
-		[0, 1, 1, 0],
-		[0, 1, 1, 0],
-		[0, 0, 0, 0]
-	];
-	let x = 2;
-	let y = 2;
-	for (let i = 0; i < cell.length; i++) {
-		for (let j = 0; j < cell[0].length; j++) {
-			matrix[x + i][y + j] = cell[i][j];
-			$(cell).css('background-color', 'black');
-		}
-	}
-
-}
 function stopMatrix() {
 
 }
+$('td').click(function () {
+var row = $("#ourTable tr").index($(this).closest('tr'));
+var col= $(this).closest("td").index();
+var cells=table.rows[row].cells[col];
+
+if(matrix[row][col]==0){
+	matrix[row][col]=1;
+	$(cells).css('background-color', 'black');	
+}
+else {
+	matrix[row][col]=0;
+	$(cells).css('background-color', 'white');	
+}
+
+
+});
