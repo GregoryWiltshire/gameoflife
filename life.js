@@ -1,5 +1,3 @@
-//TODO
-// booty is great
 function draw_matrix() {
 }
 //function that will determine the next state of the board
@@ -28,8 +26,21 @@ function next_state(matrix) {
 			new_matrix[i][j] = bitvalue;
 		}
 	}
+	//overwrite the outer two elements for each side
+	for (let i = 0; i < new_matrix.length; i++) {
+		new_matrix[i][0] = 0;
+		new_matrix[i][1] = 0;
+		new_matrix[i][new_matrix[i].length - 1] = 0;
+		new_matrix[i][(new_matrix[i].length - 2)] = 0;
+	}
+	for (let j = 0; j < new_matrix.length; j++) {
+		new_matrix[new_matrix.length - 1][j] = 0;
+		new_matrix[new_matrix.length - 2][j] = 0;
+		new_matrix[0][j] = 0;
+		new_matrix[1][j] = 0;
+	}
+
 	return new_matrix;
-	//f(sum_neighbors(i,j,matrix)>2)
 }
 
 function sum_neighbors(x, y, matrix) {
@@ -141,12 +152,12 @@ var startGame = function(){
 		clearInterval(intervalIDStartGame);
 	}
 }
-function startButton() {
+function startButton(){
 	gameStopped = false;
 	var intervalIDStartGame = setInterval(startGame, 250);
 }
 
-function stopButton() {
+function stopButton(){
 	gameStopped = true;
 }
 
