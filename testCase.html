@@ -11,19 +11,49 @@
         table {
             border-collapse: collapse;
         }
+        body {
+            background-color: black;
+        }
+        .btn-group button {
+            display: block;
+            position: relative;
+            top: 50px;
+            left: 1010px;
+            color: black;
+            background-color: rgb(255, 255, 255);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        table {
+            position: absolute;
+            top: 70px;
+        }
+        h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #FFFFFF;
+        }
     </style>
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
+    <h1> Game of Life</h1>
     <table id="ourTable" border="1" width="1000" height="1000">
+        <div class="btn-group">
         <button type="button" onclick="tick()">Next Generation --></button>
-        <button type="buton" onclick="twentythreebutton()">Go Forward 23 Generations</button>
+        <button type="buton"  onclick="twentythreebutton()">Go Forward 23 Generations</button>
         <button type="button" onclick="zeroMatrix()">Clear</button>
         <button type="button" onclick="startButton()">Start</button>
         <button type="button" onclick="stopButton()">Stop</button>
-        <button type="button" onclick="pleaseWork()">ClearLife</button>
+        <button type="button" onclick="blockShape()">Block</button>
+        <button type="button" onclick="lineShape()">Line</button>
+        <button type="button" onclick="blinkerShape()">Blinker</button>
+    </div>
+        
         <tr>
             <td></td>
             <td></td>

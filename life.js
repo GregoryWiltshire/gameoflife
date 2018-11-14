@@ -1,5 +1,3 @@
-//TODO
-// booty is great
 function draw_matrix() {
 }
 //function that will determine the next state of the board
@@ -28,8 +26,21 @@ function next_state(matrix) {
 			new_matrix[i][j] = bitvalue;
 		}
 	}
+	//overwrite the outer two elements for each side
+	for (let i = 0; i < new_matrix.length; i++) {
+		new_matrix[i][0] = 0;
+		new_matrix[i][1] = 0;
+		new_matrix[i][new_matrix[i].length - 1] = 0;
+		new_matrix[i][(new_matrix[i].length - 2)] = 0;
+	}
+	for (let j = 0; j < new_matrix.length; j++) {
+		new_matrix[new_matrix.length - 1][j] = 0;
+		new_matrix[new_matrix.length - 2][j] = 0;
+		new_matrix[0][j] = 0;
+		new_matrix[1][j] = 0;
+	}
+
 	return new_matrix;
-	//f(sum_neighbors(i,j,matrix)>2)
 }
 
 function sum_neighbors(x, y, matrix) {
@@ -79,8 +90,7 @@ function populate_matrix(matrix) {
 		matrix[0][j] = 0;
 		matrix[1][j] = 0;
 	}
-	//console.table(matrix);
-}//end populate_matrix
+}
 
 var matrix = create_matrix(100, 100);
 populate_matrix(matrix);
@@ -107,7 +117,7 @@ function color() {
 color();
 var intervalID = null;
 var counter = 0;
-var twentyThree = function(){
+var twentyThree = function () {
 	if (counter < 23) {
 		counter++;
 		tick();
@@ -122,22 +132,19 @@ function twentythreebutton() {
 
 }
 
-
 function tick(interval) {
 	matrix = next_state(matrix);
 	color();
 	console.log(counter);
 
 }
-
 var intervalIDStartGame = null;
 var gameStopped = true;
-
-var startGame = function(){
-	if (!gameStopped){
+var startGame = function () {
+	if (!gameStopped) {
 		tick();
 	}
-	else{
+	else {
 		clearInterval(intervalIDStartGame);
 	}
 }
@@ -150,13 +157,6 @@ function stopButton() {
 	gameStopped = true;
 }
 
-// var  = function () {
-// 	gameStopped = false;
-// 	while (gameStopped) {
-// 		tick();
-// 	}
-// }
-
 function zeroMatrix() {
 	matrix = create_matrix(matrix.length, matrix[0].length);
 	for (let i = 0; i < matrix.length; i++) {
@@ -166,22 +166,50 @@ function zeroMatrix() {
 	}
 	tick();
 }
-function stopMatrix() {
-
+function lineShape() {
+	matrix[10][10] = 1;
+	color();
+	matrix[10][11] = 1;
+	color();
+	matrix[10][12] = 1;
+	color();
 }
+function blockShape() {
+	matrix[50][50] = 1;
+	color();
+	matrix[51][50] = 1;
+	color();
+	matrix[51][49] = 1;
+	color();
+	matrix[50][49] = 1;
+	color();
+}
+function blinkerShape() {
+	matrix[30][30] = 1;
+	color();
+	matrix[31][30] = 1;
+	color();
+	matrix[30][31] = 1;
+	color();
+	matrix[32][33] = 1;
+	color();
+	matrix[33][32] = 1;
+	color();
+	matrix[33][33] = 1;
+	color();
+}
+
 $('td').click(function () {
-var row = $("#ourTable tr").index($(this).closest('tr'));
-var col= $(this).closest("td").index();
-var cells=table.rows[row].cells[col];
-
-if(matrix[row][col]==0){
-	matrix[row][col]=1;
-	$(cells).css('background-color', 'black');	
-}
-else {
-	matrix[row][col]=0;
-	$(cells).css('background-color', 'white');	
-}
-
-
+	var row = $("#ourTable tr").index($(this).closest('tr'));
+	var col = $(this).closest("td").index();
+	var cells = table.rows[row].cells[col];
+	alert(matrix[10][10]);
+	if (matrix[row][col] == 0) {
+		matrix[row][col] = 1;
+		$(cells).css('background-color', 'black');
+	}
+	else {
+		matrix[row][col] = 0;
+		$(cells).css('background-color', 'white');
+	}
 });
