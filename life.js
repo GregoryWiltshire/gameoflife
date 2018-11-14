@@ -198,7 +198,19 @@ function blinkerShape() {
 	matrix[33][33] = 1;
 	color();
 }
+function glider() {
+	matrix[40][40] = 1;
+	color();
+	matrix[40][41] = 1;
+	color();
+	matrix[40][42] = 1;
+	color();
+	matrix[39][42] = 1;
+	color();
+	matrix[38][41] = 1;
+	color();
 
+}
 $('td').click(function () {
 	var row = $("#ourTable tr").index($(this).closest('tr'));
 	var col = $(this).closest("td").index();
