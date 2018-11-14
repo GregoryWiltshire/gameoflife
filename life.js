@@ -148,12 +148,12 @@ var startGame = function () {
 		clearInterval(intervalIDStartGame);
 	}
 }
-function startButton() {
+function startButton(){
 	gameStopped = false;
 	var intervalIDStartGame = setInterval(startGame, 250);
 }
 
-function stopButton() {
+function stopButton(){
 	gameStopped = true;
 }
 
