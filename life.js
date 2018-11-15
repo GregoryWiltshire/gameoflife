@@ -1,23 +1,35 @@
-function draw_matrix() {
-}
-//function that will determine the next state of the board
-function next_state(matrix) {
+var gen = 0;
+function createTable(dim) {
+	var body = document.getElementsByTagName("body")[0];
+	var table = document.createElement('TABLE');
+	var tb = document.createElement('TBODY');
+	table.appendChild(tb);
 
+	for (var i = 0; i < dim; i++) {
+		var tr = document.createElement('TR');
+		tb.appendChild(tr);
+		for (var j = 0; j < dim; j++) {
+			var td = document.createElement('TD');
+			tr.appendChild(td);
+		}
+	}
+	body.appendChild(table);
+	document.getElementsByTagName('table')[0].setAttribute('id', 'ourTable');
+	document.getElementsByTagName('table')[0].setAttribute('width', '650');
+	document.getElementsByTagName('table')[0].setAttribute('height', '650');
+	document.getElementsByTagName('table')[0].setAttribute('border', '1');
+}
+function next_state(matrix) {
 	new_matrix = create_matrix(matrix.length, matrix[1].length);
-	//ignore the outer two rows and columns
 	for (let i = 2; i < matrix.length - 2; i++) {
-		//for each column
 		for (let j = 2; j < matrix[0].length - 2; j++) {
 			let bitvalue = matrix[i][j];
 			let neighbors = sum_neighbors(i, j, matrix);
-			//if alive
 			if (bitvalue == 1) {
-				//if more than 3, or less than 2 neighbors he dead
 				if (neighbors < 2 || neighbors > 3) {
 					bitvalue = 0;
 				}
 			}
-			//if dead
 			else {
 				if (neighbors == 3) {
 					bitvalue = 1;
@@ -26,7 +38,6 @@ function next_state(matrix) {
 			new_matrix[i][j] = bitvalue;
 		}
 	}
-	//overwrite the outer two elements for each side
 	for (let i = 0; i < new_matrix.length; i++) {
 		new_matrix[i][0] = 0;
 		new_matrix[i][1] = 0;
@@ -45,7 +56,6 @@ function next_state(matrix) {
 
 function sum_neighbors(x, y, matrix) {
 	//visit each of the surrounding elements of the point
-	//y is the row position, x is the column position
 	let sum = 0;
 	//go up
 	sum += matrix[x - 1][y + 1];
@@ -67,7 +77,6 @@ function create_matrix(rows, columns) {
 	}
 	return matrix;
 }
-
 
 function populate_matrix(matrix) {
 	//for each row
@@ -91,25 +100,25 @@ function populate_matrix(matrix) {
 		matrix[1][j] = 0;
 	}
 }
-
-var matrix = create_matrix(100, 100);
+createTable(20);
+var matrix = create_matrix(20, 20);
 populate_matrix(matrix);
 console.table(matrix);
-newmatrix = next_state(matrix);
+var newmatrix = next_state(matrix);
 console.table(new_matrix);
 var table = $("#ourTable")[0];
 var cell = table.rows[0].cells[0];
 
 function color() {
-	for (var i = 0; i < 100; i++) {
-		for (var j = 0; j < 100; j++) {
+	for (var i = 0; i < matrix.length; i++) {
+		for (var j = 0; j < matrix[0].length; j++) {
 			if (matrix[i][j] == 1) {
 				cell = table.rows[i].cells[j];
-				$(cell).css('background-color', 'black');
+				$(cell).css('background-color', 'white');
 			}
 			else {
 				cell = table.rows[i].cells[j];
-				$(cell).css('background-color', 'white');
+				$(cell).css('background-color', 'black');
 			}
 		}
 	}
@@ -121,6 +130,7 @@ var twentyThree = function () {
 	if (counter < 23) {
 		counter++;
 		tick();
+		document.getElementById('gen').innerHTML = gen;
 	}
 	else {
 		clearInterval(intervalID);
@@ -135,7 +145,8 @@ function twentythreebutton() {
 function tick(interval) {
 	matrix = next_state(matrix);
 	color();
-	console.log(counter);
+	gen++;
+	document.getElementById('gen').innerHTML = gen;
 
 }
 var intervalIDStartGame = null;
@@ -143,17 +154,18 @@ var gameStopped = true;
 var startGame = function () {
 	if (!gameStopped) {
 		tick();
+		document.getElementById('gen').innerHTML = gen;
 	}
 	else {
 		clearInterval(intervalIDStartGame);
 	}
 }
-function startButton(){
+function startButton() {
 	gameStopped = false;
 	var intervalIDStartGame = setInterval(startGame, 250);
 }
 
-function stopButton(){
+function stopButton() {
 	gameStopped = true;
 }
 
@@ -165,63 +177,77 @@ function zeroMatrix() {
 		}
 	}
 	tick();
+	gen = 0;
+	document.getElementById('gen').innerHTML = gen;
 }
-function lineShape() {
-	matrix[10][10] = 1;
-	color();
-	matrix[10][11] = 1;
-	color();
-	matrix[10][12] = 1;
-	color();
-}
-function blockShape() {
-	matrix[50][50] = 1;
-	color();
-	matrix[51][50] = 1;
-	color();
-	matrix[51][49] = 1;
-	color();
-	matrix[50][49] = 1;
-	color();
-}
-function blinkerShape() {
-	matrix[30][30] = 1;
-	color();
-	matrix[31][30] = 1;
-	color();
-	matrix[30][31] = 1;
-	color();
-	matrix[32][33] = 1;
-	color();
-	matrix[33][32] = 1;
-	color();
-	matrix[33][33] = 1;
-	color();
-}
-function glider() {
-	matrix[40][40] = 1;
-	color();
-	matrix[40][41] = 1;
-	color();
-	matrix[40][42] = 1;
-	color();
-	matrix[39][42] = 1;
-	color();
-	matrix[38][41] = 1;
-	color();
 
-}
 $('td').click(function () {
 	var row = $("#ourTable tr").index($(this).closest('tr'));
 	var col = $(this).closest("td").index();
 	var cells = table.rows[row].cells[col];
-	alert(matrix[10][10]);
 	if (matrix[row][col] == 0) {
 		matrix[row][col] = 1;
-		$(cells).css('background-color', 'black');
+		$(cells).css('background-color', 'white');
 	}
 	else {
 		matrix[row][col] = 0;
-		$(cells).css('background-color', 'white');
+		$(cells).css('background-color', 'black');
 	}
 });
+
+function setSize(dimension) {
+	$('#ourTable').remove();
+	var dim = parseInt(dimension);
+	createTable(dim);
+	matrix = create_matrix(dim, dim);
+	populate_matrix(matrix);
+	newmatrix = next_state(matrix);
+	table = $("#ourTable")[0];
+	cell = table.rows[0].cells[0];
+	$('td').click(function () {
+		var row = $("#ourTable tr").index($(this).closest('tr'));
+		var col = $(this).closest("td").index();
+		var cells = table.rows[row].cells[col];
+
+		if (matrix[row][col] == 0) {
+			matrix[row][col] = 1;
+			$(cells).css('background-color', 'white');
+		}
+		else {
+			matrix[row][col] = 0;
+			$(cells).css('background-color', 'black');
+		}
+	});
+	color();
+}
+
+function lineShape() {
+	matrix[3][3] = 1;
+	matrix[3][4] = 1;
+	matrix[3][5] = 1;
+	color();
+}
+function blockShape() {
+	matrix[7][7] = 1;
+	matrix[8][7] = 1;
+	matrix[8][6] = 1;
+	matrix[7][6] = 1;
+	color();
+}
+function blinkerShape() {
+	matrix[10][10] = 1;
+	matrix[11][10] = 1;
+	matrix[10][11] = 1;
+	matrix[12][13] = 1;
+	matrix[13][12] = 1;
+	matrix[13][13] = 1;
+	color();
+}
+function glider() {
+	matrix[5][5] = 1;
+	matrix[5][6] = 1;
+	matrix[5][7] = 1;
+	matrix[4][7] = 1;
+	matrix[3][6] = 1;
+	color();
+}
